@@ -1,0 +1,14 @@
+{
+  "name": "CodeQuest",
+  "description": "An interactive coding academy with gamified lessons, real-time community support, and personalized learning paths.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "AI-powered coding assistant",
+    "Real-time chat",
+    "Interactive code challenges",
+    "Gamified leaderboards"
+  ]
+}

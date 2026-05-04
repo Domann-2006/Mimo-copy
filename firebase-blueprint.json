@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a learner in the CodeQuest ecosystem.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "points": { "type": "integer" },
+        "level": { "type": "integer" },
+        "streak": { "type": "integer" },
+        "lastActive": { "type": "string", "format": "date-time" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "learningPath": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "email", "points", "level", "streak"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "A collection of lessons for a specific programming language.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "language": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+        "lessonsCount": { "type": "integer" },
+        "image": { "type": "string" }
+      },
+      "required": ["title", "description", "language", "difficulty"]
+    },
+    "Lesson": {
+      "title": "Lesson",
+      "description": "An individual interactive teaching unit.",
+      "type": "object",
+      "properties": {
+        "courseId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "order": { "type": "integer" },
+        "type": { "type": "string", "enum": ["reading", "coding", "quiz"] },
+        "challenge": {
+          "type": "object",
+          "properties": {
+            "initialCode": { "type": "string" },
+            "solution": { "type": "string" },
+            "testCases": { "type": "string" }
+          }
+        }
+      },
+      "required": ["courseId", "title", "content", "order", "type"]
+    },
+    "Progress": {
+      "title": "Progress",
+      "description": "Tracks a user's completion of a specific lesson.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "score": { "type": "integer" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "lessonId", "courseId", "completed"]
+    },
+    "ForumPost": {
+      "title": "Forum Post",
+      "description": "A community discussion or project share.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhoto": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "type": { "type": "string", "enum": ["discussion", "project", "help"] },
+        "upvotes": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "authorId", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "User profiles and stats" },
+    "courses": { "schema": "Course", "description": "Available programming courses" },
+    "courses/{courseId}/lessons": { "schema": "Lesson", "description": "Lessons within a course" },
+    "users/{userId}/progress": { "schema": "Progress", "description": "User-specific course progress" },
+    "forum": { "schema": "ForumPost", "description": "Community content" }
+  }
+}
